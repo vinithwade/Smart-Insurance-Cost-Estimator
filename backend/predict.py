@@ -51,13 +51,15 @@ def predict(user_data: dict) -> dict:
     cost_usd = float(model.predict(df)[0])
     cost_inr = round(cost_usd * USD_TO_INR, 2)
     
-    risk = get_risk_category(cost_inr)
+    income = int(user_data.get("income", 500000))
+    savings = int(user_data.get("savings", 100000))
+    risk = get_risk_category(income, savings)
     suggestions = get_lifestyle_suggestions(user_data)
     
     return {
-        "estimated_cost": cost_inr,
-        "estimated_cost_usd": round(cost_usd, 2),
-        "risk_category": risk,
-        "suggestions": suggestions,
-        "bmi": user_data.get("bmi"),
+        "estimated_cost": float(cost_inr),
+        "estimated_cost_usd": float(round(cost_usd, 2)),
+        "risk_category": str(risk),
+        "suggestions": [str(s) for s in suggestions],
+        "bmi": float(user_data.get("bmi")) if user_data.get("bmi") is not None else None,
     }

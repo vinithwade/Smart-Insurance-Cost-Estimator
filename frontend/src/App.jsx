@@ -57,18 +57,45 @@ function App() {
     setLoading(true)
     setError(null)
     try {
+      const age = parseInt(form.age, 10)
+      const height = parseFloat(form.height)
+      const weight = parseFloat(form.weight)
+      const income = parseInt(form.income, 10) || 500000
+      const savings = parseInt(form.savings, 10) || 100000
+
+      if (!Number.isFinite(age) || age < 18 || age > 100) {
+        setError('Please enter a valid age (18–100)')
+        setLoading(false)
+        return
+      }
+      if (!Number.isFinite(height) || height <= 0 || height > 250) {
+        setError('Please enter a valid height (cm)')
+        setLoading(false)
+        return
+      }
+      if (!Number.isFinite(weight) || weight <= 0 || weight > 300) {
+        setError('Please enter a valid weight (kg)')
+        setLoading(false)
+        return
+      }
+      if (income < 0 || savings < 0) {
+        setError('Please enter valid income and savings')
+        setLoading(false)
+        return
+      }
+
       const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '')
       const url = baseUrl ? `${baseUrl}/api/predict` : '/api/predict'
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          age: parseInt(form.age, 10),
+          age,
           gender: form.gender,
-          height: parseFloat(form.height),
-          weight: parseFloat(form.weight),
+          height,
+          weight,
           marital_status: form.maritalStatus,
-          dependents: parseInt(form.dependents, 10),
+          dependents: parseInt(form.dependents, 10) || 0,
           smoker: form.smoker,
           alcohol: form.alcohol,
           exercise: form.exercise,
@@ -76,8 +103,8 @@ function App() {
           diabetes: form.diabetes,
           heart_problems: form.heartProblems,
           chronic_disease: form.chronicDisease,
-          income: parseInt(form.income, 10) || 500000,
-          savings: parseInt(form.savings, 10) || 100000,
+          income,
+          savings,
           occupation: form.occupation,
         }),
       })

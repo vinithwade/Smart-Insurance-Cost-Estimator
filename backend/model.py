@@ -79,16 +79,22 @@ def build_model(model_type="xgboost"):
     return pipeline
 
 
-def get_risk_category(cost: float) -> str:
-    """Classify risk based on predicted cost (in INR)."""
-    # Thresholds scaled for INR (US dataset * ~83 conversion)
-    # Adjusted so LOW appears for healthy profiles (young, non-smoker, good BMI)
-    if cost < 400000:
-        return "LOW"
-    elif cost < 800000:
+def get_risk_category(income: float, savings: float) -> str:
+    """
+    Classify risk based on savings rate (savings as % of income).
+    - 75%+ savings → LOW (good financial discipline)
+    - 25% or less → HIGH (low savings buffer)
+    - Between 25% and 75% → MEDIUM
+    """
+    if income is None or income <= 0:
         return "MEDIUM"
-    else:
+    savings_pct = savings / income
+    if savings_pct >= 0.75:
+        return "LOW"
+    elif savings_pct <= 0.25:
         return "HIGH"
+    else:
+        return "MEDIUM"
 
 
 def get_lifestyle_suggestions(data: dict) -> list[str]:

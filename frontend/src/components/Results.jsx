@@ -1,7 +1,14 @@
 import './Results.css'
 
+function formatCost(value) {
+  const num = Number(value)
+  if (num !== num || num < 0) return '—'
+  return `₹${Math.round(num).toLocaleString('en-IN')}/year`
+}
+
 export default function Results({ data, form, onReset }) {
-  const riskClass = data.risk_category?.toLowerCase() || 'medium'
+  const riskClass = (data.risk_category || 'medium').toString().toLowerCase()
+  const displayCost = formatCost(data?.estimated_cost)
 
   return (
     <div className="results">
@@ -10,26 +17,24 @@ export default function Results({ data, form, onReset }) {
 
         <div className="results-cost">
           <span className="cost-label">Estimated Insurance Cost</span>
-          <span className="cost-value">
-            ₹{data.estimated_cost?.toLocaleString('en-IN')}/year
-          </span>
+          <span className="cost-value">{displayCost}</span>
         </div>
 
         <div className={`results-risk risk-${riskClass}`}>
           <span className="risk-label">Risk Category</span>
-          <span className="risk-value">{data.risk_category}</span>
+          <span className="risk-value">{data.risk_category || '—'}</span>
         </div>
 
-        {data.bmi && (
+        {data.bmi != null && !Number.isNaN(Number(data.bmi)) && (
           <div className="results-bmi">
-            <span>Your BMI: {data.bmi}</span>
+            <span>Your BMI: {Number(data.bmi).toFixed(1)}</span>
           </div>
         )}
 
         <div className="results-suggestions">
           <h3>Suggestions</h3>
           <ul>
-            {data.suggestions?.map((s, i) => (
+            {(Array.isArray(data.suggestions) ? data.suggestions : []).map((s, i) => (
               <li key={i}>{s}</li>
             ))}
           </ul>
