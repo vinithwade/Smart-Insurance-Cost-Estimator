@@ -57,8 +57,9 @@ function App() {
     setLoading(true)
     setError(null)
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || ''
-      const res = await fetch(`${apiUrl}/api/predict`, {
+      const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '')
+      const url = baseUrl ? `${baseUrl}/api/predict` : '/api/predict'
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
