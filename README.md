@@ -34,6 +34,10 @@ npm run dev
 
 Open **http://localhost:5173**. The frontend proxies `/api` to the backend.
 
+## Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for pushing to GitHub and hosting on Vercel + Render.
+
 ## Project Structure
 
 ```
