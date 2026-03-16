@@ -82,9 +82,10 @@ def build_model(model_type="xgboost"):
 def get_risk_category(cost: float) -> str:
     """Classify risk based on predicted cost (in INR)."""
     # Thresholds scaled for INR (US dataset * ~83 conversion)
-    if cost < 300000:
+    # Adjusted so LOW appears for healthy profiles (young, non-smoker, good BMI)
+    if cost < 400000:
         return "LOW"
-    elif cost < 600000:
+    elif cost < 800000:
         return "MEDIUM"
     else:
         return "HIGH"
