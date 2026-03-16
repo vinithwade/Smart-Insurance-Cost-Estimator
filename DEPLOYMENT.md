@@ -32,7 +32,7 @@ The backend must be deployed first so you have the API URL for the frontend.
 3. Import `vinithwade/Smart-Insurance-Cost-Estimator`
 4. Configure:
    - **Root Directory**: `frontend` (click Edit, set to `frontend`)
-   - **Environment Variable**: Add `VITE_API_URL` = your Render backend URL (e.g. `https://insurance-estimator-api.onrender.com`)
+   - **Environment Variable**: Add `VITE_API_URL` = your Render backend URL (e.g. `https://insurance-estimator-api.onrender.com` — no trailing slash)
 5. Click **Deploy**
 
 Your app will be live at the Vercel URL (e.g. `https://smart-insurance-cost-estimator.vercel.app`).
