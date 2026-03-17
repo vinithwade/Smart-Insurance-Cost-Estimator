@@ -43,7 +43,6 @@ class PredictionRequest(BaseModel):
     chronic_disease: Optional[str] = "no"
     income: int = Field(..., ge=0)
     savings: int = Field(..., ge=0)
-    occupation: Optional[str] = "employed"
 
 
 @app.get("/")

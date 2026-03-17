@@ -30,18 +30,6 @@ export default function StepFinancial({
           onChange={(e) => updateForm({ savings: e.target.value })}
         />
       </div>
-      <div className="form-group">
-        <label>Occupation</label>
-        <select
-          value={form.occupation}
-          onChange={(e) => updateForm({ occupation: e.target.value })}
-        >
-          <option value="employed">Employed</option>
-          <option value="self-employed">Self-employed</option>
-          <option value="business">Business</option>
-          <option value="retired">Retired</option>
-        </select>
-      </div>
       {error && <div className="form-error">{error}</div>}
       <div className="form-actions">
         <button className="btn btn-secondary" onClick={prevStep} disabled={loading}>

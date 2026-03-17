@@ -30,7 +30,6 @@ const INITIAL_FORM = {
   chronicDisease: 'no',
   income: '',
   savings: '',
-  occupation: 'employed',
 }
 
 function App() {
@@ -105,7 +104,6 @@ function App() {
           chronic_disease: form.chronicDisease,
           income,
           savings,
-          occupation: form.occupation,
         }),
       })
       if (!res.ok) {
